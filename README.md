@@ -1,2 +1,2 @@
-# SeisMain.jl
-This is the main section for SeismicJulia packages. 
+# SeisPlot.jl
+This package contains Plotting tools for SeismicJulia project 
