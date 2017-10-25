@@ -49,7 +49,7 @@ Plot time-space,  2D seismic data `d` with color, wiggles or overlay.
 
 # Example
 ```julia
-julia> d, extent = SeisLinearEvents(); SeisPlot(d);
+julia> d,extent = SeisLinearEvents(); SeisPlot(d);
 ```
 
 Credits: Aaron Stanton, 2015
