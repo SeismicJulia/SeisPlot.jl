@@ -45,14 +45,14 @@ julia> d, extent = SeisLinearEvents(); SeisPlotFK(d);
 
 Credits: Aaron Stanton, 2015
 """
-function SeisPlotFK{T<:Real}(d::Array{T,2};
+function SeisPlotFK(d::Array{T,2};
                            cmap="PuOr", pclip=99.9, vmin="NULL", vmax="NULL",
                            aspect="auto", interpolation="Hanning", fmax=100,
                            scal="NULL", title=" ", titlesize=16, xlabel=" ", xunits=" ",
                            ylabel=" ", yunits=" ", labelsize=14, ox=0, dx=1,
                            oy=0, dy=1, xticks="NULL", yticks="NULL",
                            xticklabels="NULL", yticklabels="NULL", ticksize=11,
-                           fignum="NULL", wbox=6, hbox=6, dpi=100, name="NULL")
+                           fignum="NULL", wbox=6, hbox=6, dpi=100, name="NULL") where {T<:Real}
 
 if (vmin=="NULL" || vmax=="NULL")
         if (pclip<=100)
@@ -65,12 +65,12 @@ if (vmin=="NULL" || vmax=="NULL")
 	a = vmin
 	b = vmax
     end
-    plt.ion()
+    pl[:ion]()
     if (fignum == "NULL")
-	fig = plt.figure(figsize=(wbox, hbox), dpi=dpi, facecolor="w",
+	fig = pl[:figure](figsize=(wbox, hbox), dpi=dpi, facecolor="w",
                            edgecolor="k")
     else
-	fig = plt.figure(num=fignum, figsize=(wbox, hbox), dpi=dpi,
+	fig = pl[:figure](num=fignum, figsize=(wbox, hbox), dpi=dpi,
                            facecolor="w", edgecolor="k")
     end
 
@@ -98,24 +98,24 @@ if (vmin=="NULL" || vmax=="NULL")
 		b = quantile(abs.(D[:]), 1)*pclip/100
 	    end
 	end
-	im = plt.imshow(D, cmap=cmap, vmin=a, vmax=b, extent=[kmin,kmax,fmax,0],
-                        aspect=aspect)
+    im = pl[:imshow](D, cmap=cmap, vmin=a, vmax=b, extent=[kmin,kmax,fmax,0.0],
+                            aspect=aspect)
 
-    plt.title(title, fontsize=titlesize)
-    plt.xlabel(join([xlabel " " xunits]), fontsize=labelsize)
-    plt.ylabel(join([ylabel " " yunits]), fontsize=labelsize)
-    xticks == "NULL" ? nothing : plt.xticks(xticks)
-    yticks == "NULL" ? nothing : plt.yticks(yticks)
-    ax = plt.gca()
+    pl[:title](title, fontsize=titlesize)
+    pl[:xlabel](join([xlabel " " xunits]), fontsize=labelsize)
+    pl[:ylabel](join([ylabel " " yunits]), fontsize=labelsize)
+    xticks == "NULL" ? nothing : pl[:xticks](xticks)
+    yticks == "NULL" ? nothing : pl[:yticks](yticks)
+    ax = pl[:gca]()
     xticklabels == "NULL" ? nothing : ax[:set_xticklabels](xticklabels)
     yticklabels == "NULL" ? nothing : ax[:set_yticklabels](yticklabels)
-    plt.setp(ax[:get_xticklabels](), fontsize=ticksize)
-    plt.setp(ax[:get_yticklabels](), fontsize=ticksize)
+    pl[:setp](ax[:get_xticklabels](), fontsize=ticksize)
+    pl[:setp](ax[:get_yticklabels](), fontsize=ticksize)
     if (name == "NULL")
-	plt.show()
+	pl[:show]()
     else
-	plt.savefig(name, dpi=dpi)
-	plt.close()
+	pl[:savefig](name, dpi=dpi)
+	pl[:close]()
     end
     return im
 end

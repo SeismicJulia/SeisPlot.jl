@@ -49,21 +49,21 @@ Plot time-space,  2D seismic data `d` with color, wiggles or overlay.
 
 # Example
 ```julia
-julia> d,extent = SeisLinearEvents(); SeisPlot(d);
+julia> d, extent = SeisLinearEvents(); SeisPlot(d);
 ```
 
 Credits: Aaron Stanton, 2015
 """
-function SeisPlotTX{T<:Real}(d::Array{T,2}; style="color",
+function SeisPlotTX(d::Array{T,2}; style="color",
                            cmap="PuOr", pclip=98, vmin="NULL", vmax="NULL",
-                           aspect="auto", interpolation="Hanning", 
+                           aspect="auto", interpolation="Hanning",
                            wiggle_fill_color="k", wiggle_line_color="k",
                            wiggle_trace_increment=1, xcur=1.2, scal="NULL",
                            title=" ", titlesize=16, xlabel=" ", xunits=" ",
                            ylabel=" ", yunits=" ", labelsize=14, ox=0, dx=1,
                            oy=0, dy=1, xticks="NULL", yticks="NULL",
                            xticklabels="NULL", yticklabels="NULL", ticksize=11,
-                           fignum="NULL", wbox=6, hbox=6, dpi=100, name="NULL")
+                           fignum="NULL", wbox=6, hbox=6, dpi=100, name="NULL") where {T<:Real}
 
     if (vmin=="NULL" || vmax=="NULL")
         if (pclip<=100)
@@ -76,62 +76,60 @@ function SeisPlotTX{T<:Real}(d::Array{T,2}; style="color",
 	a = vmin
 	b = vmax
     end
-    plt.ion()
+    pl[:ion]()
     if (fignum == "NULL")
-	fig = plt.figure(figsize=(wbox, hbox), dpi=dpi, facecolor="w",
+	fig = pl[:figure](figsize=(wbox, hbox), dpi=dpi, facecolor="w",
                            edgecolor="k")
     else
-	fig = plt.figure(num=fignum, figsize=(wbox, hbox), dpi=dpi,
+	fig = pl[:figure](num=fignum, figsize=(wbox, hbox), dpi=dpi,
                            facecolor="w", edgecolor="k")
     end
-    
+
 	if (style != "wiggles")
-	    im = plt.imshow(d, cmap=cmap, vmin=a, vmax=b,
+	    imm = pl[:imshow](d, cmap=cmap, vmin=a, vmax=b,
                             extent=[ox - dx/2,ox + (size(d,2)-1)*dx + dx/2,
                                     oy + (size(d,1)-1)*dy,oy],
                             aspect=aspect, interpolation=interpolation)
 	end
 	if (style != "color")
             style=="wiggles" ? margin = dx : margin = dx/2
-	    y = oy+dy*collect(0:1:size(d, 1)-1)
-	    x = ox+dx*collect(0:1:size(d, 2)-1)
+	    y = oy .+ dy*collect(0:1:size(d, 1)-1)
+	    x = ox .+ dx*collect(0:1:size(d, 2)-1)
 	    delta = wiggle_trace_increment*dx
 	    hmin = minimum(x)
 	    hmax = maximum(x)
-            dmax = maximum(abs(d[:]))
+            dmax = maximum(abs.(d[:]))
 	    alpha = xcur*delta
-            scal=="NULL" ? alpha = alpha/maximum(abs(d[:])) : alpha=alpha*scal
+            scal=="NULL" ? alpha = alpha/maximum(abs.(d[:])) : alpha=alpha*scal
 	    for k = 1:wiggle_trace_increment:size(d, 2)
 		x_vert = Float64[]
 		y_vert = Float64[]
 		sc = x[k] * ones(size(d, 1))
     s  = d[:,k]*alpha + sc
-		im = plt.plot( s, y, wiggle_line_color)
+		imm = pl[:plot]( s, y, wiggle_line_color)
 		if (style != "overlay")
-		    plt.fill_betweenx(y, sc, s, where=s.>sc, facecolor=wiggle_line_color)
+		    pl[:fill_betweenx](y, sc, s, where=s.>sc, facecolor=wiggle_line_color)
 		end
 	    end
-	    plt.axis([ox - margin, ox + (size(d, 2)-1)*dx + margin,
+	    pl[:axis]([ox - margin, ox + (size(d, 2)-1)*dx + margin,
                       oy + (size(d, 1)-1)*dy, oy])
 	end
-    
-    plt.title(title, fontsize=titlesize)
-    plt.xlabel(join([xlabel " " xunits]), fontsize=labelsize)
-    plt.ylabel(join([ylabel " " yunits]), fontsize=labelsize)
-    xticks == "NULL" ? nothing : plt.xticks(xticks)
-    yticks == "NULL" ? nothing : plt.yticks(yticks)
-    ax = plt.gca()
+
+    pl[:title](title, fontsize=titlesize)
+    pl[:xlabel](join([xlabel " " xunits]), fontsize=labelsize)
+    pl[:ylabel](join([ylabel " " yunits]), fontsize=labelsize)
+    xticks == "NULL" ? nothing : pl[:xticks](xticks)
+    yticks == "NULL" ? nothing : pl[:yticks](yticks)
+    ax = pl[:gca]()
     xticklabels == "NULL" ? nothing : ax[:set_xticklabels](xticklabels)
     yticklabels == "NULL" ? nothing : ax[:set_yticklabels](yticklabels)
-    plt.setp(ax[:get_xticklabels](), fontsize=ticksize)
-    plt.setp(ax[:get_yticklabels](), fontsize=ticksize)
+    pl[:setp](ax[:get_xticklabels](), fontsize=ticksize)
+    pl[:setp](ax[:get_yticklabels](), fontsize=ticksize)
     if (name == "NULL")
-	plt.show()
+	pl[:show]()
     else
-	plt.savefig(name, dpi=dpi)
-	plt.close()
+	pl[:savefig](name, dpi=dpi)
+	pl[:close]()
     end
     return im
 end
-
-
