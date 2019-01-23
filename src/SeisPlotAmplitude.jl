@@ -39,26 +39,26 @@ julia> d, extent = SeisLinearEvents(); SeisPlot(d);
 
 Credits: Aaron Stanton, 2015
 """
-function SeisPlotAmplitude{T<:Real}(d::Array{T,2}, fmax, dt;
+function SeisPlotAmplitude(d::Array{T,2}, fmax, dt;
                            title=" ", titlesize=16, xlabel=" ", xunits=" ",
                            ylabel=" ", yunits=" ", labelsize=14, ox=0, dx=1,
                            oy=0, xticks="NULL", yticks="NULL",
                            xticklabels="NULL", yticklabels="NULL", ticksize=11,
-                           fignum="NULL", wbox=6, hbox=6, dpi=100, name="NULL")
+                           fignum="NULL", wbox=6, hbox=6, dpi=100, name="NULL") where T<:Real
 
-plt.ion()
+pl[:ion]()
 if (fignum == "NULL")
-    fig = plt.figure(figsize=(wbox, hbox), dpi=dpi, facecolor="w",
+    fig = pl[:figure](figsize=(wbox, hbox), dpi=dpi, facecolor="w",
                        edgecolor="k")
 else
-	fig = plt.figure(num=fignum, figsize=(wbox, hbox), dpi=dpi,
+	fig = pl[:figure](num=fignum, figsize=(wbox, hbox), dpi=dpi,
                            facecolor="w", edgecolor="k")
 end
 
 
 xlabel = "Frequency"
 xunits = "(Hz)"
-ylabel = "Amplitude"
+ylabel = "Ampltitude"
 yunits = ""
 
 nx = size(d[:,:], 2)
@@ -68,7 +68,7 @@ if fmax > FMAX
     fmax = FMAX
 end
 nf = convert(Int32, floor((size(d[:, :], 1)/2)*fmax/FMAX))
-y = fftshift(sum(abs.(fft(d[:, :], 1)), 2))/nx
+y = fftshift(sum(abs.(fft(d[:, :], 1)), dims=2))/nx
 y = y[round(Int,end/2):round(Int, end/2)+nf]
 norm = maximum(y[:])
 if (norm > 0.)
@@ -76,28 +76,28 @@ if (norm > 0.)
 end
 
 x = collect(0:df:fmax)
-im = plt.plot(x, y)
+im = pl[:plot](x, y)
 
-plt.title(title)
-plt.xlabel(join([xlabel " " xunits]))
-plt.ylabel(join([ylabel " " yunits]))
-plt.axis([0, fmax, 0, 1.1])
-plt.title(title, fontsize=titlesize)
-plt.xlabel(join([xlabel " " xunits]), fontsize=labelsize)
-plt.ylabel(join([ylabel " " yunits]), fontsize=labelsize)
-xticks == "NULL" ? nothing : plt.xticks(xticks)
-yticks == "NULL" ? nothing : plt.yticks(yticks)
-ax = plt.gca()
+pl[:title](title)
+pl[:xlabel](join([xlabel " " xunits]))
+pl[:ylabel](join([ylabel " " yunits]))
+pl[:axis]([0, fmax, 0, 1.1])
+pl[:title](title, fontsize=titlesize)
+pl[:xlabel](join([xlabel " " xunits]), fontsize=labelsize)
+pl[:ylabel](join([ylabel " " yunits]), fontsize=labelsize)
+xticks == "NULL" ? nothing : pl[:xticks](xticks)
+yticks == "NULL" ? nothing : pl[:yticks](yticks)
+ax = pl[:gca]()
 xticklabels == "NULL" ? nothing : ax[:set_xticklabels](xticklabels)
 yticklabels == "NULL" ? nothing : ax[:set_yticklabels](yticklabels)
-plt.setp(ax[:get_xticklabels](), fontsize=ticksize)
-plt.setp(ax[:get_yticklabels](), fontsize=ticksize)
+pl[:setp](ax[:get_xticklabels](), fontsize=ticksize)
+pl[:setp](ax[:get_yticklabels](), fontsize=ticksize)
 
 if (name == "NULL")
-    plt.show()
+    pl[:show]()
 else
-    plt.savefig(name, dpi=dpi)
-    plt.close()
+    pl[:savefig](name, dpi=dpi)
+    pl[:close]()
 end
 
 return im
