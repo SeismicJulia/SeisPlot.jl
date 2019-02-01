@@ -19,11 +19,11 @@ To use this package you must first install the [Julia](http://julialang.org/down
 The package uses the Julia PyPlot and PyCall packages. 
 Then, run the Julia application and type, at the prompt
 
-```using Pkg```
-
-```Pkg.add("https://github.com/SeismicJulia/SeisPlot.jl.git")```
-
-```using SeisPlot```
+```
+julia>using Pkg
+julia>Pkg.add("https://github.com/SeismicJulia/SeisPlot.jl.git")
+julia>using SeisPlot
+```
 
 If you use the SeismicJulia project, please cite the following paper
 ```
@@ -58,7 +58,6 @@ SeisPlot(d; style="overlay",plotpar...);
 
 ```
 
-![plot1](http://seismic.physics.ualberta.ca/figures/616_79_PR2.png)
 
 ## For developers: contributing to the project
 
