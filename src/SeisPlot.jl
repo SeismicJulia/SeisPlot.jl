@@ -2,6 +2,7 @@ module SeisPlot
 
 using PyCall, Statistics, Requires, FFTW
 using PyPlot
+import SeisMain
 
 #@require PyPlot
 const pl = PyNULL()
