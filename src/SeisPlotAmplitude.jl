@@ -39,12 +39,12 @@ julia> d = SeisLinearEvents(); SeisPlotAmplitude(d,100,0.004);
 
 Credits: Aaron Stanton, 2015
 """
-function SeisPlotAmplitude(d::Array{Real,2}, fmax::Real, dt::Real;
+function SeisPlotAmplitude(d::Array{T,2}, fmax::Real, dt::Real;
                            title=" ", titlesize=16, xlabel=" ", xunits=" ",
                            ylabel=" ", yunits=" ", labelsize=14, ox=0, dx=1,
                            oy=0, xticks="NULL", yticks="NULL",
                            xticklabels="NULL", yticklabels="NULL", ticksize=11,
-                           fignum="NULL", wbox=6, hbox=6, dpi=100, name="NULL")
+                           fignum="NULL", wbox=6, hbox=6, dpi=100, name="NULL") where {T<:Real}
 
 pl[:ion]()
 if (fignum == "NULL")

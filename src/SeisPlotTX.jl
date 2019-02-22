@@ -54,7 +54,7 @@ julia> d = SeisLinearEvents(); SeisPlotTX(d);
 
 Credits: Aaron Stanton, 2015
 """
-function SeisPlotTX(d::Array{Real,2}; style="color",
+function SeisPlotTX(d::Array{T,2}; style="color",
                            cmap="PuOr", pclip=98, vmin="NULL", vmax="NULL",
                            aspect="auto", interpolation="Hanning",
                            wiggle_fill_color="k", wiggle_line_color="k",
@@ -63,7 +63,7 @@ function SeisPlotTX(d::Array{Real,2}; style="color",
                            ylabel=" ", yunits=" ", labelsize=14, ox=0, dx=1,
                            oy=0, dy=1, xticks="NULL", yticks="NULL",
                            xticklabels="NULL", yticklabels="NULL", ticksize=11,
-                           fignum="NULL", wbox=6, hbox=6, dpi=100, name="NULL")
+                           fignum="NULL", wbox=6, hbox=6, dpi=100, name="NULL") where {T<:Real}
 
     if (vmin=="NULL" || vmax=="NULL")
         if (pclip<=100)
