@@ -44,7 +44,7 @@ julia> d = SeisLinearEvents(); SeisPlotFK(d);
 
 Credits: Aaron Stanton, 2015
 """
-function SeisPlotFK(d::Array{T<Real,2};
+function SeisPlotFK(d::Array{T<:Real,2};
                            cmap="PuOr", pclip=99.9, vmin="NULL", vmax="NULL",
                            aspect="auto", interpolation="Hanning", fmax=100,
                            scal="NULL", title=" ", titlesize=16, xlabel=" ", xunits=" ",
