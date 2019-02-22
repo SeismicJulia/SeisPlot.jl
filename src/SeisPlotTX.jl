@@ -54,7 +54,7 @@ julia> d = SeisLinearEvents(); SeisPlotTX(d);
 
 Credits: Aaron Stanton, 2015
 """
-function SeisPlotTX(d::Array{T<:Real,2}; style="color",
+function SeisPlotTX(d::Array{Real,2}; style="color",
                            cmap="PuOr", pclip=98, vmin="NULL", vmax="NULL",
                            aspect="auto", interpolation="Hanning",
                            wiggle_fill_color="k", wiggle_line_color="k",
