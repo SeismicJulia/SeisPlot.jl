@@ -99,10 +99,6 @@ function SeisPlotCoordinates(headers;style="sxsygxgy",cmap="Greys",
 	pl[:xlabel](join([xlabel " " xunits]), fontsize=labelsize)
 	pl[:ylabel](join([ylabel " " yunits]), fontsize=labelsize)
 
-
-    pl[:setp](ax[:get_xticklabels](), fontsize=ticksize)
-    pl[:setp](ax[:get_yticklabels](), fontsize=ticksize)
-
     if (name == "NULL")
 		pl[:show]()
 	else
