@@ -26,10 +26,8 @@ Plot shot and receiver coordinates or fold map. Optionally can print to a file.
 - `wbox=6`: width of figure in inches.
 - `hbox=6`: height of figure in inches.
 - `name="NULL"`: name of the figure to save (only if `name` is given).
-- `interpolation="none"`: interpolation method for colormapping data.
 - `titlesize=16`: size of title.
 - `labelsize=14`: size of labels on axis.
-- `ticksize=11`: size of labels on ticks.
 - `fignum="NULL"`: number of figure.
 
 
@@ -40,7 +38,7 @@ function SeisPlotCoordinates(headers;style="sxsygxgy",cmap="Greys",
                                     aspect="auto",pclip=98,vmin="NULL",vmax="NULL",
                                     title=" ",xlabel=" ",xunits=" ",ylabel=" ",yunits=" ",
                                     ox=0,dx=1,oy=0,dy=1,dpi=100,wbox=6,hbox=6,name="NULL",
-                                    interpolation="none",titlesize=20,labelsize=15,ticksize=10,
+                                    titlesize=20,labelsize=15,
                                     fignum="NULL")
 
 	pl[:ion]()
