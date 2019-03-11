@@ -4,52 +4,52 @@
 Plot time-space,  2D seismic data `d` with color, wiggles or overlay.
 
 # Arguments
-* `d`: 2D data to plot.
+- `d::Array{Real,2}`: 2D data to plot.
 
 
 # Keyword arguments
 
-* `style="color"`: style of the plot: `"color"`, `"wiggles"` or `"overlay"`.
-* `cmap="PuOr"`: colormap for  `"color"` or `"overlay"` style.
-* `pclip=98`: percentile for determining clip.
-* `vmin="NULL"`: minimum value used in colormapping data.
-* `vmax="NULL"`: maximum value used in colormapping data.
-* `aspect="auto"`: color image aspect ratio.
-* `interpolation="Hanning"`: interpolation method for colormapping data.
+- `style="color"`: style of the plot: `"color"`, `"wiggles"` or `"overlay"`.
+- `cmap="PuOr"`: colormap for  `"color"` or `"overlay"` style.
+- `pclip=98`: percentile for determining clip.
+- `vmin="NULL"`: minimum value used in colormapping data.
+- `vmax="NULL"`: maximum value used in colormapping data.
+- `aspect="auto"`: color image aspect ratio.
+- `interpolation="Hanning"`: interpolation method for colormapping data.
 
-* `wiggle_fill_color="k"`: color for filling the positive wiggles.
-* `wiggle_line_color="k"`: color for wiggles' lines.
-* `wiggle_trace_increment=1`: increment for wiggle traces.
-* `xcur=1.2`: wiggle excursion in traces corresponding to clip.
-* `scal="NULL"`: scale for wiggles.
+- `wiggle_fill_color="k"`: color for filling the positive wiggles.
+- `wiggle_line_color="k"`: color for wiggles' lines.
+- `wiggle_trace_increment=1`: increment for wiggle traces.
+- `xcur=1.2`: wiggle excursion in traces corresponding to clip.
+- `scal="NULL"`: scale for wiggles.
 
-* `title=" "`: title of plot.
-* `titlesize=16`: size of title.
-* `xlabel=" "`: label on x-axis.
-* `xunits=" "`: units of y-axis.
-* `ylabel=" "`: label on x-axis.
-* `yunits=" "`: units of y-axis.
-* `labelsize=14`: size of labels on axis.
+- `title=" "`: title of plot.
+- `titlesize=16`: size of title.
+- `xlabel=" "`: label on x-axis.
+- `xunits=" "`: units of y-axis.
+- `ylabel=" "`: label on x-axis.
+- `yunits=" "`: units of y-axis.
+- `labelsize=14`: size of labels on axis.
 
-* `ox=0`: first point of x-axis.
-* `dx=1`: increment of x-axis.
-* `oy=0`: first point of y-axis.
-* `dy=1`: increment of y-axis.
+- `ox=0`: first point of x-axis.
+- `dx=1`: increment of x-axis.
+- `oy=0`: first point of y-axis.
+- `dy=1`: increment of y-axis.
 
-* `xticks="NULL"`: ticks on x-axis.
-* `yticks="NULL"`: ticks on y-axis.
-* `xticklabels="NULL"`: labels on ticks of x-axis.
-* `yticklabels="NULL"`: labels on ticks of y-axis.
-* `ticksize=11`: size of labels on ticks.
-* `fignum="NULL"`: number of figure.
-* `wbox=6`: width of figure in inches.
-* `hbox=6`: height of figure in inches.
-* `dpi=100`: dots-per-inch of figure.
-* `name="NULL"`: name of the figure to save (only if `name` is given).
+- `xticks="NULL"`: ticks on x-axis.
+- `yticks="NULL"`: ticks on y-axis.
+- `xticklabels="NULL"`: labels on ticks of x-axis.
+- `yticklabels="NULL"`: labels on ticks of y-axis.
+- `ticksize=11`: size of labels on ticks.
+- `fignum="NULL"`: number of figure.
+- `wbox=6`: width of figure in inches.
+- `hbox=6`: height of figure in inches.
+- `dpi=100`: dots-per-inch of figure.
+- `name="NULL"`: name of the figure to save (only if `name` is given).
 
 # Example
 ```julia
-julia> d, extent = SeisLinearEvents(); SeisPlot(d);
+julia> d = SeisLinearEvents(); SeisPlotTX(d);
 ```
 
 Credits: Aaron Stanton, 2015
@@ -105,7 +105,7 @@ function SeisPlotTX(d::Array{T,2}; style="color",
 		x_vert = Float64[]
 		y_vert = Float64[]
 		sc = x[k] * ones(size(d, 1))
-    s  = d[:,k]*alpha + sc
+        s  = d[:,k]*alpha + sc
 		imm = pl[:plot]( s, y, wiggle_line_color)
 		if (style != "overlay")
 		    pl[:fill_betweenx](y, sc, s, where=s.>sc, facecolor=wiggle_line_color)
