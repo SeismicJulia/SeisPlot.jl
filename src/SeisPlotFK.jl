@@ -64,12 +64,12 @@ if (vmin=="NULL" || vmax=="NULL")
 	a = vmin
 	b = vmax
     end
-    pl[:ion]()
+    pl.ion()
     if (fignum == "NULL")
-	fig = pl[:figure](figsize=(wbox, hbox), dpi=dpi, facecolor="w",
+	fig = pl.figure(figsize=(wbox, hbox), dpi=dpi, facecolor="w",
                            edgecolor="k")
     else
-	fig = pl[:figure](num=fignum, figsize=(wbox, hbox), dpi=dpi,
+	fig = pl.figure(num=fignum, figsize=(wbox, hbox), dpi=dpi,
                            facecolor="w", edgecolor="k")
     end
 
@@ -97,24 +97,24 @@ if (vmin=="NULL" || vmax=="NULL")
 		b = quantile(abs.(D[:]), 1)*pclip/100
 	    end
 	end
-    im = pl[:imshow](D, cmap=cmap, vmin=a, vmax=b, extent=[kmin,kmax,fmax,0.0],
+    im = pl.imshow(D, cmap=cmap, vmin=a, vmax=b, extent=[kmin,kmax,fmax,0.0],
                             aspect=aspect)
 
-    pl[:title](title, fontsize=titlesize)
-    pl[:xlabel](join([xlabel " " xunits]), fontsize=labelsize)
-    pl[:ylabel](join([ylabel " " yunits]), fontsize=labelsize)
-    xticks == "NULL" ? nothing : pl[:xticks](xticks)
-    yticks == "NULL" ? nothing : pl[:yticks](yticks)
-    ax = pl[:gca]()
-    xticklabels == "NULL" ? nothing : ax[:set_xticklabels](xticklabels)
-    yticklabels == "NULL" ? nothing : ax[:set_yticklabels](yticklabels)
-    pl[:setp](ax[:get_xticklabels](), fontsize=ticksize)
-    pl[:setp](ax[:get_yticklabels](), fontsize=ticksize)
+    pl.title(title, fontsize=titlesize)
+    pl.xlabel(join([xlabel " " xunits]), fontsize=labelsize)
+    pl.ylabel(join([ylabel " " yunits]), fontsize=labelsize)
+    xticks == "NULL" ? nothing : pl.xticks(xticks)
+    yticks == "NULL" ? nothing : pl.yticks(yticks)
+    ax = pl.gca()
+    xticklabels == "NULL" ? nothing : ax.set_xticklabels(xticklabels)
+    yticklabels == "NULL" ? nothing : ax.set_yticklabels(yticklabels)
+    pl.setp(ax.get_xticklabels(), fontsize=ticksize)
+    pl.setp(ax.get_yticklabels(), fontsize=ticksize)
     if (name == "NULL")
-	pl[:show]()
+	pl.show()
     else
-	pl[:savefig](name, dpi=dpi)
-	pl[:close]()
+	pl.savefig(name, dpi=dpi)
+	pl.close()
     end
     return im
 end

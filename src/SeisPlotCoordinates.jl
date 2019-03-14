@@ -41,12 +41,12 @@ function SeisPlotCoordinates(headers;style="sxsygxgy",cmap="Greys",
                                     titlesize=20,labelsize=15,
                                     fignum="NULL")
 
-	pl[:ion]()
+	pl.ion()
 	if (fignum == "NULL")
-		fig = pl[:figure](figsize=(wbox, hbox), dpi=dpi, facecolor="w",
+		fig = pl.figure(figsize=(wbox, hbox), dpi=dpi, facecolor="w",
                                 edgecolor="k")
 	else
-		fig = pl[:figure](num=fignum,figsize=(wbox, hbox),
+		fig = pl.figure(num=fignum,figsize=(wbox, hbox),
                                 dpi=dpi, facecolor="w", edgecolor="k")
 	end
 	if (style == "sxsygxgy")
@@ -54,9 +54,9 @@ function SeisPlotCoordinates(headers;style="sxsygxgy",cmap="Greys",
 		sy = SeisMain.ExtractHeader(headers,"sy")
 		gx = SeisMain.ExtractHeader(headers,"gx")
 		gy = SeisMain.ExtractHeader(headers,"gy")
-		im = pl[:scatter](gx,gy,marker="^",s=5,color="b");
-		im = pl[:scatter](sx,sy,marker="*",s=8,color="r");
-		#pl[:axis([ox,ox + (size(in,2)-1)*dx,oy + (size(in,1)-1)*dy,oy])
+		im = pl.scatter(gx,gy,marker="^",s=5,color="b");
+		im = pl.scatter(sx,sy,marker="*",s=8,color="r");
+		#pl.axis([ox,ox + (size(in,2)-1)*dx,oy + (size(in,1)-1)*dy,oy])
 	elseif (style == "fold")
 		imx = SeisMain.ExtractHeader(headers,"imx")
 		imy = SeisMain.ExtractHeader(headers,"imy")
@@ -83,25 +83,25 @@ function SeisPlotCoordinates(headers;style="sxsygxgy",cmap="Greys",
 			a = vmin
 			b = vmax
 		end
-		im = pl[:imshow](fold,cmap=cmap,vmin=a,vmax=b,
+		im = pl.imshow(fold,cmap=cmap,vmin=a,vmax=b,
                             extent=[ox,ox + (size(fold,2)-1)*dx,oy + (size(fold,1)-1)*dy,oy]
                             ,aspect=aspect)
-		ax = pl[:gca]()
-		ax[:invert_yaxis]();
-		pl[:colorbar]()
+		ax = pl.gca()
+		ax.invert_yaxis();
+		pl.colorbar()
 	else
 		println("no other plotting style defined yet")
 	end
 
-	pl[:title](title, fontsize=titlesize)
-	pl[:xlabel](join([xlabel " " xunits]), fontsize=labelsize)
-	pl[:ylabel](join([ylabel " " yunits]), fontsize=labelsize)
+	pl.title(title, fontsize=titlesize)
+	pl.xlabel(join([xlabel " " xunits]), fontsize=labelsize)
+	pl.ylabel(join([ylabel " " yunits]), fontsize=labelsize)
 
     if (name == "NULL")
-		pl[:show]()
+		pl.show()
 	else
-		pl[:savefig](name,dpi=dpi)
-		pl[:close]()
+		pl.savefig(name,dpi=dpi)
+		pl.close()
 	end
 	return im
 end
