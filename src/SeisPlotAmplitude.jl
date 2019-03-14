@@ -46,12 +46,12 @@ function SeisPlotAmplitude(d::Array{T,2}, fmax::Real, dt::Real;
                            xticklabels="NULL", yticklabels="NULL", ticksize=11,
                            fignum="NULL", wbox=6, hbox=6, dpi=100, name="NULL") where {T<:Real}
 
-pl[:ion]()
+pl.ion()
 if (fignum == "NULL")
-    fig = pl[:figure](figsize=(wbox, hbox), dpi=dpi, facecolor="w",
+    fig = pl.figure(figsize=(wbox, hbox), dpi=dpi, facecolor="w",
                        edgecolor="k")
 else
-	fig = pl[:figure](num=fignum, figsize=(wbox, hbox), dpi=dpi,
+	fig = pl.figure(num=fignum, figsize=(wbox, hbox), dpi=dpi,
                            facecolor="w", edgecolor="k")
 end
 
@@ -76,28 +76,28 @@ if (norm > 0.)
 end
 
 x = collect(0:df:fmax)
-im = pl[:plot](x, y)
+im = pl.plot(x, y)
 
-pl[:title](title)
-pl[:xlabel](join([xlabel " " xunits]))
-pl[:ylabel](join([ylabel " " yunits]))
-pl[:axis]([0, fmax, 0, 1.1])
-pl[:title](title, fontsize=titlesize)
-pl[:xlabel](join([xlabel " " xunits]), fontsize=labelsize)
-pl[:ylabel](join([ylabel " " yunits]), fontsize=labelsize)
-xticks == "NULL" ? nothing : pl[:xticks](xticks)
-yticks == "NULL" ? nothing : pl[:yticks](yticks)
-ax = pl[:gca]()
-xticklabels == "NULL" ? nothing : ax[:set_xticklabels](xticklabels)
-yticklabels == "NULL" ? nothing : ax[:set_yticklabels](yticklabels)
-pl[:setp](ax[:get_xticklabels](), fontsize=ticksize)
-pl[:setp](ax[:get_yticklabels](), fontsize=ticksize)
+pl.title(title)
+pl.xlabel(join([xlabel " " xunits]))
+pl.ylabel(join([ylabel " " yunits]))
+pl.axis([0, fmax, 0, 1.1])
+pl.title(title, fontsize=titlesize)
+pl.xlabel(join([xlabel " " xunits]), fontsize=labelsize)
+pl.ylabel(join([ylabel " " yunits]), fontsize=labelsize)
+xticks == "NULL" ? nothing : pl.xticks(xticks)
+yticks == "NULL" ? nothing : pl.yticks(yticks)
+ax = pl.gca()
+xticklabels == "NULL" ? nothing : ax.set_xticklabels(xticklabels)
+yticklabels == "NULL" ? nothing : ax.set_yticklabels(yticklabels)
+pl.setp(ax.get_xticklabels(), fontsize=ticksize)
+pl.setp(ax.get_yticklabels(), fontsize=ticksize)
 
 if (name == "NULL")
-    pl[:show]()
+    pl.show()
 else
-    pl[:savefig](name, dpi=dpi)
-    pl[:close]()
+    pl.savefig(name, dpi=dpi)
+    pl.close()
 end
 
 return im
