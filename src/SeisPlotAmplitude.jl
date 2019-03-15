@@ -61,14 +61,14 @@ xunits = "(Hz)"
 ylabel = "Ampltitude"
 yunits = ""
 
-nx = size(d[:,:], 2)
-df = 1/dt/size(d[:, :], 1)
-FMAX = df*size(d[:, :], 1)/2
+nx = size(d, 2)
+df = 1/dt/size(d, 1)
+FMAX = df*size(d, 1)/2
 if fmax > FMAX
     fmax = FMAX
 end
-nf = convert(Int32, floor((size(d[:, :], 1)/2)*fmax/FMAX))
-y = fftshift(sum(abs.(fft(d[:, :], 1)), dims=2))/nx
+nf = convert(Int32, floor((size(d, 1)/2)*fmax/FMAX))
+y = fftshift(sum(abs.(fft(d, 1)), dims=2))/nx
 y = y[round(Int,end/2):round(Int, end/2)+nf]
 norm = maximum(y[:])
 if (norm > 0.)

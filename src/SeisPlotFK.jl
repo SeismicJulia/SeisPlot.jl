@@ -53,17 +53,7 @@ function SeisPlotFK(d::Array{T,2};
                            xticklabels="NULL", yticklabels="NULL", ticksize=11,
                            fignum="NULL", wbox=6, hbox=6, dpi=100, name="NULL") where {T<:Real}
 
-if (vmin=="NULL" || vmax=="NULL")
-        if (pclip<=100)
-	    a = -quantile(abs.(d[:]), (pclip/100))
-	else
-	    a = -quantile(abs.(d[:]), 1)*pclip/100
-	end
-	b = -a
-    else
-	a = vmin
-	b = vmax
-    end
+
     pl.ion()
     if (fignum == "NULL")
 	fig = pl.figure(figsize=(wbox, hbox), dpi=dpi, facecolor="w",
@@ -78,16 +68,17 @@ if (vmin=="NULL" || vmax=="NULL")
 	ylabel = "Frequency"
 	yunits = "Hz"
 
-	dk = 1/dx/size(d[:,:], 2)
-	kmin = -dk*size(d[:,:], 2)/2
-	kmax =  dk*size(d[:,:], 2)/2
-	df = 1/dy/size(d[:,:], 1)
-	FMAX = df*size(d[:,:], 1)/2
+	dk = 1/dx/size(d, 2)
+	kmin = -dk*size(d, 2)/2
+	kmax =  dk*size(d, 2)/2
+
+	df = 1/dy/size(d, 1)
+	FMAX = df*size(d, 1)/2
 	if fmax > FMAX
 	    fmax = FMAX
 	end
-	nf = convert(Int32, floor((size(d[:, :], 1)/2)*fmax/FMAX))
-	D = abs.(fftshift(fft(d[:, :])))
+	nf = convert(Int32, floor((size(d, 1)/2)*fmax/FMAX))
+	D = abs.(fftshift(fft(d)))
 	D = D[round(Int,end/2):round(Int,end/2)+nf, :]
 	if (vmin=="NULL" || vmax=="NULL")
 	    a = 0.
@@ -97,9 +88,9 @@ if (vmin=="NULL" || vmax=="NULL")
 		b = quantile(abs.(D[:]), 1)*pclip/100
 	    end
 	end
+
     im = pl.imshow(D, cmap=cmap, vmin=a, vmax=b, extent=[kmin,kmax,fmax,0.0],
                             aspect=aspect)
-
     pl.title(title, fontsize=titlesize)
     pl.xlabel(join([xlabel " " xunits]), fontsize=labelsize)
     pl.ylabel(join([ylabel " " yunits]), fontsize=labelsize)
