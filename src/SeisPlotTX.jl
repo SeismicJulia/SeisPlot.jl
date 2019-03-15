@@ -76,17 +76,17 @@ function SeisPlotTX(d::Array{T,2}; style="color",
 	a = vmin
 	b = vmax
     end
-    pl[:ion]()
+    pl.ion()
     if (fignum == "NULL")
-	fig = pl[:figure](figsize=(wbox, hbox), dpi=dpi, facecolor="w",
+	fig = pl.figure(figsize=(wbox, hbox), dpi=dpi, facecolor="w",
                            edgecolor="k")
     else
-	fig = pl[:figure](num=fignum, figsize=(wbox, hbox), dpi=dpi,
+	fig = pl.figure(num=fignum, figsize=(wbox, hbox), dpi=dpi,
                            facecolor="w", edgecolor="k")
     end
 
 	if (style != "wiggles")
-	    imm = pl[:imshow](d, cmap=cmap, vmin=a, vmax=b,
+	    imm = pl.imshow(d, cmap=cmap, vmin=a, vmax=b,
                             extent=[ox - dx/2,ox + (size(d,2)-1)*dx + dx/2,
                                     oy + (size(d,1)-1)*dy,oy],
                             aspect=aspect, interpolation=interpolation)
@@ -106,30 +106,30 @@ function SeisPlotTX(d::Array{T,2}; style="color",
 		y_vert = Float64[]
 		sc = x[k] * ones(size(d, 1))
         s  = d[:,k]*alpha + sc
-		imm = pl[:plot]( s, y, wiggle_line_color)
+		imm = pl.plot( s, y, wiggle_line_color)
 		if (style != "overlay")
-		    pl[:fill_betweenx](y, sc, s, where=s.>sc, facecolor=wiggle_line_color)
+		    pl.fill_betweenx(y, sc, s, where=s.>sc, facecolor=wiggle_line_color)
 		end
 	    end
-	    pl[:axis]([ox - margin, ox + (size(d, 2)-1)*dx + margin,
+	    pl.axis([ox - margin, ox + (size(d, 2)-1)*dx + margin,
                       oy + (size(d, 1)-1)*dy, oy])
 	end
 
-    pl[:title](title, fontsize=titlesize)
-    pl[:xlabel](join([xlabel " " xunits]), fontsize=labelsize)
-    pl[:ylabel](join([ylabel " " yunits]), fontsize=labelsize)
-    xticks == "NULL" ? nothing : pl[:xticks](xticks)
-    yticks == "NULL" ? nothing : pl[:yticks](yticks)
-    ax = pl[:gca]()
-    xticklabels == "NULL" ? nothing : ax[:set_xticklabels](xticklabels)
-    yticklabels == "NULL" ? nothing : ax[:set_yticklabels](yticklabels)
-    pl[:setp](ax[:get_xticklabels](), fontsize=ticksize)
-    pl[:setp](ax[:get_yticklabels](), fontsize=ticksize)
+    pl.title(title, fontsize=titlesize)
+    pl.xlabel(join([xlabel " " xunits]), fontsize=labelsize)
+    pl.ylabel(join([ylabel " " yunits]), fontsize=labelsize)
+    xticks == "NULL" ? nothing : pl.xticks(xticks)
+    yticks == "NULL" ? nothing : pl.yticks(yticks)
+    ax = pl.gca()
+    xticklabels == "NULL" ? nothing : ax.set_xticklabels(xticklabels)
+    yticklabels == "NULL" ? nothing : ax.set_yticklabels(yticklabels)
+    pl.setp(ax.get_xticklabels(), fontsize=ticksize)
+    pl.setp(ax.get_yticklabels(), fontsize=ticksize)
     if (name == "NULL")
-	pl[:show]()
+	pl.show()
     else
-	pl[:savefig](name, dpi=dpi)
-	pl[:close]()
+	pl.savefig(name, dpi=dpi)
+	pl.close()
     end
     return im
 end
