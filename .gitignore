@@ -4,10 +4,20 @@
 *.c~
 *.seis~
 *.txt~
+*.yml~
+*.md~
+*~
+*#
+*ipynb_checkpoints
+REQUIRE
 
 # Text files #
 ###################
 *.txt
+
+# Document files #
+###################
+docs/build
 
 # Compiled source #
 ###################
