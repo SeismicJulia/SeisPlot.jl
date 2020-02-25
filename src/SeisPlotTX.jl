@@ -131,5 +131,5 @@ function SeisPlotTX(d::Array{T,2}; style="color",
 	pl.savefig(name, dpi=dpi)
 	pl.close()
     end
-    return im
+    return imm
 end
