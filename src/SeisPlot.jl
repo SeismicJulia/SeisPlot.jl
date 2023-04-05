@@ -1,6 +1,6 @@
 module SeisPlot
 
-using PyCall, Statistics, Requires, FFTW
+using PyCall, Statistics, FFTW
 using PyPlot
 import SeisMain
 
