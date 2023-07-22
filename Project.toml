@@ -1,7 +1,7 @@
 name = "SeisPlot"
 uuid = "00783350-183d-11e9-0ed7-9f3f45823183"
 authors = ["fercarozzi <carozzi@ualberta.ca>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
