@@ -1,9 +1,8 @@
-using Pkg
-using PyCall
-
-if lowercase(get(ENV, "CI", "false")) == "true"
-
-    ENV["PYTHON"] = ""
-    Pkg.build("PyCall")
-
-end
+import Pkg, Conda
+@info "building!"
+Conda.pip_interop(true)
+Conda.pip("install", "matplotlib")
+Conda.add("matplotlib")
+ENV["PYTHON"] = joinpath(Conda.ROOTENV, "bin", "python")
+Pkg.build("PyCall")
+@info "built PyCall!"
